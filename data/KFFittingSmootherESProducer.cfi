@@ -1,0 +1,6 @@
+es_module = KFFittingSmootherESProducer
+{
+  string ComponentName = "KFFittingSmoother"
+  string  Fitter = "KFFitter"
+  string Smoother = "KFSmoother"
+}
