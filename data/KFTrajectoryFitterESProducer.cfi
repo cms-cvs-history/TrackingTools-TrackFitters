@@ -1,4 +1,4 @@
-es_module = KFTrajectoryFitterESProducer
+es_module KFTrajectoryFitter = KFTrajectoryFitterESProducer
 {
   string ComponentName = "KFFitter"
   string  Propagator = "PropagatorWithMaterial"
