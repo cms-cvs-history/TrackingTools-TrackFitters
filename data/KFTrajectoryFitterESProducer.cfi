@@ -1,8 +1,0 @@
-es_module KFTrajectoryFitter = KFTrajectoryFitterESProducer
-{
-  string ComponentName = "KFFitter"
-  string  PropagatorAlongMomentum = "PropagatorWithMaterial"
-  string  PropagatorOppositeToMomentum = "PropagatorWithMaterialOpposite"
-  string Updator = "KFUpdator"
-  string Estimator = "Chi2"
-}
