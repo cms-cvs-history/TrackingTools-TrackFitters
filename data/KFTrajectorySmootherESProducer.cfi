@@ -1,8 +1,7 @@
 es_module KFTrajectorySmoother = KFTrajectorySmootherESProducer
 {
   string ComponentName = "KFSmoother"
-  string  PropagatorAlongMomentum = "PropagatorWithMaterial"
-  string  PropagatorOppositeToMomentum = "PropagatorWithMaterialOpposite"
-  string Updator = "KFUpdator"
-  string Estimator = "Chi2"
+  string Propagator = "PropagatorWithMaterial"
+  string Updator    = "KFUpdator"
+  string Estimator  = "Chi2"
 }
