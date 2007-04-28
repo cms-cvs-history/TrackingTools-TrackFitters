@@ -3,6 +3,4 @@ es_module KFFittingSmoother = KFFittingSmootherESProducer
   string ComponentName = "KFFittingSmoother"
   string  Fitter = "KFFitter"
   string Smoother = "KFSmoother"
-  double EstimateCut = -1
-  int32 MinNumberOfHits = 5
 }
