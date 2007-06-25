@@ -4,4 +4,5 @@ es_module KFTrajectorySmoother = KFTrajectorySmootherESProducer
   string Propagator = "PropagatorWithMaterial"
   string Updator    = "KFUpdator"
   string Estimator  = "Chi2"
+  double errorRescaling = 100.
 }
