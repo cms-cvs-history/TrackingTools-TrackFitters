@@ -5,4 +5,5 @@ es_module KFTrajectorySmoother = KFTrajectorySmootherESProducer
   string Updator    = "KFUpdator"
   string Estimator  = "Chi2"
   double errorRescaling = 100.
+  int32 minHits = 3
 }
