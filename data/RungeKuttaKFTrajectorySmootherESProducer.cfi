@@ -1,0 +1,9 @@
+es_module RKTrajectorySmoother = KFTrajectorySmootherESProducer
+{
+  string ComponentName = "RKSmoother"
+  string Propagator = "RungeKuttaTrackerPropagator"
+  string Updator    = "KFUpdator"
+  string Estimator  = "Chi2"
+  double errorRescaling = 100.
+  int32 minHits = 3
+}

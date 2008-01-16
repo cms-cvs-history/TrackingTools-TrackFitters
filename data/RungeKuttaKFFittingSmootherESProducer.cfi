@@ -1,0 +1,8 @@
+es_module RKFittingSmoother = KFFittingSmootherESProducer
+{
+  string ComponentName = "RKFittingSmoother"
+  string  Fitter = "RKFitter"
+  string Smoother = "RKSmoother"
+  double EstimateCut = -1 	 
+  int32 MinNumberOfHits = 5
+}
