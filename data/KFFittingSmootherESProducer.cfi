@@ -5,4 +5,5 @@ es_module KFFittingSmoother = KFFittingSmootherESProducer
   string Smoother = "KFSmoother"
   double EstimateCut = -1 	 
   int32 MinNumberOfHits = 5
+  bool RejectTracks = true
 }
