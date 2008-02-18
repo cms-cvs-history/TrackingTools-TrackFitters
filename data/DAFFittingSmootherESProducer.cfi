@@ -1,0 +1,4 @@
+es_module DAFFittingSmoother = KFFittingSmoother from "TrackingTools/TrackFitters/data/KFFittingSmootherESProducer.cfi"
+replace DAFFittingSmoother.ComponentName = "DAFFittingSmoother"
+replace DAFFittingSmoother.Fitter = "DAFFitter"
+replace DAFFittingSmoother.Smoother = "DAFSmoother"
