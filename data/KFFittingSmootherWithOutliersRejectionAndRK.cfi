@@ -1,0 +1,11 @@
+es_module KFFittingSmootherWithOutliersRejectionAndRK = KFFittingSmootherESProducer
+{
+  string ComponentName = "KFFittingSmootherWithOutliersRejectionAndRK"
+  string  Fitter = "RKFitter"
+  string Smoother = "RKSmoother"
+  double EstimateCut = 20 	 
+  int32 MinNumberOfHits = 3
+  bool  RejectTracks = true
+  bool BreakTrajWith2ConsecutiveMissing = true
+  bool NoInvalidHitsBeginEnd  = true
+}

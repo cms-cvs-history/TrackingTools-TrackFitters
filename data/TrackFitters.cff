@@ -1,0 +1,11 @@
+include "TrackingTools/TrackFitters/data/DAFFittingSmootherESProducer.cfi"
+include "TrackingTools/TrackFitters/data/DAFTrajectoryFitterESProducer.cfi"
+include "TrackingTools/TrackFitters/data/DAFTrajectorySmootherESProducer.cfi"
+include "TrackingTools/TrackFitters/data/KFFittingSmootherESProducer.cfi"
+include "TrackingTools/TrackFitters/data/KFTrajectoryFitterESProducer.cfi"
+include "TrackingTools/TrackFitters/data/KFTrajectorySmootherESProducer.cfi"
+include "TrackingTools/TrackFitters/data/RungeKuttaKFFittingSmootherESProducer.cfi"
+include "TrackingTools/TrackFitters/data/RungeKuttaKFTrajectoryFitterESProducer.cfi"
+include "TrackingTools/TrackFitters/data/RungeKuttaKFTrajectorySmootherESProducer.cfi"
+
+include "TrackingTools/TrackFitters/data/KFFittingSmootherWithOutliersRejectionAndRK.cfi"
