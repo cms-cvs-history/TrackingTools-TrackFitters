@@ -1,4 +1,0 @@
-es_module DAFTrajectorySmoother = KFTrajectorySmoother from "TrackingTools/TrackFitters/data/KFTrajectorySmootherESProducer.cfi"
-replace DAFTrajectorySmoother.ComponentName = "DAFSmoother"  
-replace DAFTrajectorySmoother.Estimator  = "MRHChi2"
-replace DAFTrajectorySmoother.Propagator = "RungeKuttaTrackerPropagator"
