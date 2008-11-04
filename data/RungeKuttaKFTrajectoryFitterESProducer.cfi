@@ -1,8 +1,0 @@
-es_module RKTrajectoryFitter = KFTrajectoryFitterESProducer
-{
-  string ComponentName = "RKFitter"
-  string Propagator = "RungeKuttaTrackerPropagator"
-  string Updator    = "KFUpdator"
-  string Estimator  = "Chi2"
-  int32 minHits = 3
-}
