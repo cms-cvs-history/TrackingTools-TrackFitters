@@ -1,4 +1,0 @@
-es_module DAFTrajectoryFitter = KFTrajectoryFitter from "TrackingTools/TrackFitters/data/KFTrajectoryFitterESProducer.cfi"
-replace DAFTrajectoryFitter.ComponentName = "DAFFitter"  
-replace DAFTrajectoryFitter.Estimator  = "MRHChi2"
-replace DAFTrajectoryFitter.Propagator  = "RungeKuttaTrackerPropagator"
