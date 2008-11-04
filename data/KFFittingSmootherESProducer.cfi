@@ -6,6 +6,8 @@ es_module KFFittingSmoother = KFFittingSmootherESProducer
   double EstimateCut = -1 	 
   int32 MinNumberOfHits = 5
   bool RejectTracks = true
-  bool BreakTrajWith2ConsecutiveMissing = true
-  bool NoInvalidHitsBeginEnd  = true
+  #bool BreakTrajWith2ConsecutiveMissing = true
+  #bool NoInvalidHitsBeginEnd  = true
+  bool BreakTrajWith2ConsecutiveMissing = false
+  bool NoInvalidHitsBeginEnd  = false
 }
