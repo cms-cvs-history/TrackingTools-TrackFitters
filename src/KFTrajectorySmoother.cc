@@ -170,6 +170,17 @@ KFTrajectorySmoother::trajectories(const Trajectory& aTraj) const {
 	
 	//update backward predicted tsos with the hit
 	currTsos = updator()->update(predTsos, *preciseHit);
+        if (!currTsos.isValid()) {
+            currTsos = predTsos;
+            edm::LogWarning("KFSmoother_UpdateFailed") << 
+                "Failed updating state with hit. Rolling back to non-updated state.\n" <<
+                "State: "   << predTsos << 
+                "Hit local pos:  " << hit->localPosition() << "\n" <<
+                "Hit local err:  " << hit->localPositionError() << "\n" <<
+                "Hit global pos: " << hit->globalPosition() << "\n" <<
+                "Hit global err: " << hit->globalPositionError().matrix() << 
+                "\n";
+        }
 
 	//smooTsos updates the N-1 hits prediction with the hit
 	if (hitcounter == avtm.size()) smooTsos = itm->updatedState();
@@ -201,14 +212,21 @@ KFTrajectorySmoother::trajectories(const Trajectory& aTraj) const {
 	  << "smoothing estimate (with combTSOS)=" << estimate << "\n"
 	  << "filtering estimate=" << itm->estimate() << "\n";
 	
-	myTraj.push(TM(itm->forwardPredictedState(),
-		       predTsos,
-		       smooTsos,
-		       preciseHit,
-		       estimate,
-		       theGeometry->idToLayer(preciseHit->geographicalId()) ),
-		    estimator()->estimate(predTsos,*preciseHit).second);
-	            //itm->estimate());
+	//check for valid hits with no det (refitter with constraints)
+	if (preciseHit->det()) myTraj.push(TM(itm->forwardPredictedState(),
+					      predTsos,
+					      smooTsos,
+					      preciseHit,
+					      estimate,
+					      theGeometry->idToLayer(preciseHit->geographicalId()) ),
+					   estimator()->estimate(predTsos,*preciseHit).second);
+	else myTraj.push(TM(itm->forwardPredictedState(),
+			    predTsos,
+			    smooTsos,
+			    preciseHit,
+			    estimate),
+			 estimator()->estimate(predTsos,*preciseHit).second);
+	//itm->estimate());
       }
     } else {
       LogDebug("TrackFitters") 
@@ -228,7 +246,7 @@ KFTrajectorySmoother::trajectories(const Trajectory& aTraj) const {
       }
       
       myTraj.push(TM(itm->forwardPredictedState(),
-    		     predTsos,
+		     predTsos,
     		     combTsos,
     		     hit,
 		     0,
