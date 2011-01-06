@@ -14,8 +14,14 @@
 #include "DataFormats/MuonDetId/interface/RPCDetId.h"
 #include "DataFormats/MuonDetId/interface/MuonSubdetId.h"
 
+KFTrajectoryFitter::~KFTrajectoryFitter() {
 
-const DetLayerGeometry KFTrajectoryFitter::dummyGeometry;
+  delete thePropagator;
+  delete theUpdator;
+  delete theEstimator;
+
+}
+
 
 std::vector<Trajectory> KFTrajectoryFitter::fit(const Trajectory& aTraj) const {
 
@@ -42,13 +48,14 @@ std::vector<Trajectory> KFTrajectoryFitter::fit(const TrajectorySeed& aSeed,
 {
   if(hits.empty()) return std::vector<Trajectory>();
 
-
-  if (aSeed.direction() == anyDirection) 
+  if (aSeed.direction() == alongMomentum) {
+    thePropagator->setPropagationDirection(alongMomentum);
+  } else if (aSeed.direction() == oppositeToMomentum){
+    thePropagator->setPropagationDirection(oppositeToMomentum);
+  } else {
     throw cms::Exception("KFTrajectoryFitter","TrajectorySeed::direction() requested but not set");
-  
-  SetPropagationDirection setDir(*thePropagator,aSeed.direction());
+  }
 
-#ifdef EDM_LM_DEBUG
   LogDebug("TrackFitters")
     <<" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
     <<" KFTrajectoryFitter::fit starting with " << hits.size() <<" HITS";
@@ -61,7 +68,6 @@ std::vector<Trajectory> KFTrajectoryFitter::fit(const TrajectorySeed& aSeed,
       LogTrace("TrackFitters") << "hit #:" << j+1 << " Hit with no Det information";
   }
   LogTrace("TrackFitters") << " INITIAL STATE "<< firstPredTsos;
-#endif
 
   std::vector<Trajectory> ret(1, Trajectory(aSeed, thePropagator->propagationDirection()));
   Trajectory & myTraj = ret.front();
@@ -80,7 +86,6 @@ std::vector<Trajectory> KFTrajectoryFitter::fit(const TrajectorySeed& aSeed,
       continue;
     }
 
-#ifdef EDM_LM_DEBUG
     if (hit.isValid()) {
       LogTrace("TrackFitters")
 	<< " ----------------- HIT #" << hitcounter << " (VALID)-----------------------\n"
@@ -134,12 +139,11 @@ std::vector<Trajectory> KFTrajectoryFitter::fit(const TrajectorySeed& aSeed,
       LogTrace("TrackFitters")
 	<< " ----------------- INVALID HIT #" << hitcounter << " -----------------------";      
     }
-#endif    
+    
 
     if ( hitcounter != 1) //no propagation needed for the first hit
       predTsos = thePropagator->propagate( currTsos, *(hit.surface()) );
     
-
     if(!predTsos.isValid()) {
       LogDebug("TrackFitters") 
 	<< "SOMETHING WRONG !" << "\n"
@@ -176,11 +180,11 @@ std::vector<Trajectory> KFTrajectoryFitter::fit(const TrajectorySeed& aSeed,
 	  myTraj.push(TM(predTsos, *ihit,0,theGeometry->idToLayer((*ihit)->geographicalId())  ));
 	}
 	else{
-	  if (preciseHit->det()) myTraj.push(TM(predTsos, currTsos, preciseHit,
-						estimator()->estimate(predTsos, *preciseHit).second,
-						theGeometry->idToLayer(preciseHit->geographicalId())  ));
-	  else myTraj.push(TM(predTsos, currTsos, preciseHit,
-			      estimator()->estimate(predTsos, *preciseHit).second));
+	if (preciseHit->det()) myTraj.push(TM(predTsos, currTsos, preciseHit,
+					      estimator()->estimate(predTsos, *preciseHit).second,
+					      theGeometry->idToLayer(preciseHit->geographicalId())  ));
+	else myTraj.push(TM(predTsos, currTsos, preciseHit,
+			    estimator()->estimate(predTsos, *preciseHit).second));
 	}
       }
     } else {
@@ -196,7 +200,6 @@ std::vector<Trajectory> KFTrajectoryFitter::fit(const TrajectorySeed& aSeed,
       <<"currTsos !" << "\n"
       << currTsos;
   }  
-
   LogDebug("TrackFitters") << "Found 1 trajectory with " << myTraj.foundHits() << " valid hits\n";
   
   return ret;
